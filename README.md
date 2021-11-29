@@ -133,7 +133,7 @@ is defined the SPI memory's capacity, is configured by the `WB_ADDR_SIZE` generi
 a power of two and the base address has to be naturally aligned to the this size.
 
 Example: SPI flash with 64kB (64*1024 bytes):
-```
+```vhdl
 WB_ADDR_BASE => 0x"FFFF0000",
 WB_ADDR_SIZE => 64*1024
 ```
@@ -176,7 +176,7 @@ The `sel` byte mask signal defines the data quantity of the according access. Th
 | `0100` | write | byte 2                 |
 | `1000` | write | byte 3                 |
 
-All remaining byte mask combination will raise a transfer error (`err` is set instead of `ack` for one cycle).
+All remaining byte mask combination will raise a transfer error (`err` is set for one cycle instead of `ack`).
 
 ### Throughput
 
@@ -193,7 +193,8 @@ requires one clock of the SPI clock.
 | write | byte (8-bit)       | `8 + 8`  | `8*SPI_ABYTES` | `8`       | `8 + 8 + 8*SPI_ABYTES +  8` |
 
 For example a word-wide write access to a SPI flash that uses 24-bit addressing requires
-`8 + 8 + 8*3 + 32 = 72` SPI clock cycles.
+`8 + 8 + 8*3 + 32 = 72` SPI clock cycles. One SPI clock cycle equals `2 * SPI_CLK_DIV` cycles of the main
+clock `clk_i`.
 
 :information_source: Any kind of write access requires to set the memory's _write enable latch_, which is done
 sending a single 8-bit command.
