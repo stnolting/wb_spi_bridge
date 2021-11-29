@@ -2,7 +2,7 @@
 
 set -e
 
-# Analyse sources
+# Analise sources
 ghdl -a ../rtl/wb_spi_bridge.vhd
 ghdl -a wb_spi_bridge_tb.vhd
 
