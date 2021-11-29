@@ -39,7 +39,7 @@ The bridge might be added as XIP module to the processor someday.
 * [x] single VHDL file, no additional libraries required
 * [x] FPGA-proven
 
-**TODOs / Ideas**
+**TODOs / Ideas / Help-Wanted**
 
 * add burst support
 * add dSPI/qSPI support
