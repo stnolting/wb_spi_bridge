@@ -105,9 +105,9 @@ clock input `clk_i` to obtain the actual SPI clock. The SPI clock is defined by 
 The minimum allowed value for the clock scaler is 2 resulting in a maximal SPI clock speed of 1/4 of the input clock speed.
 
 The actual clock mode is configured via `SPI_CPHA` and `SPI_CPOL`. The combination of these two generics allow to
-configure any of the four standard SPI clock modes:
+configure any of the four standard SPI clock modes. For more information regarding the clock modes see the
+[SPI Wikipedia article](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#Clock_polarity_and_phase).
 
-![classic_rd](https://raw.githubusercontent.com/stnolting/wb_spi_bridge/main/img/SPI_timing_diagram2.wikimedia.png)
 
 ### SPI Memory
 
@@ -149,7 +149,10 @@ transfers. Burst transfer are not supported yet.
 | Classic-mode read access example | Pipelined-mode write access example |
 |:--------------------------------:|:-----------------------------------:|
 | ![classic_rd](https://raw.githubusercontent.com/stnolting/wb_spi_bridge/main/img/wishbone_classic_read.png) | ![pipelined_wr](https://raw.githubusercontent.com/stnolting/wb_spi_bridge/main/img/wishbone_pipelined_write.png) |
-| `stb` and `cyc` both stay asserted until the transfer is completed. | `cyc` stays asserted until the transfer is completed. `stb` is asserted only for one cycle right at the beginning of the transfer. |
+
+* classic-mode: `stb` and `cyc` both stay asserted until the transfer is completed.
+* pipelined-mode: `cyc` stays asserted until the transfer is completed. `stb` is asserted only for one cycle
+right at the beginning of the transfer. |
 
 A transfer is completed when the acknowledge signal `ack` is set (active for one cycle). This indicates a successful
 termination. A transfer is also completed when the error signal `err` is set (active for one cycle) indicating
@@ -189,7 +192,7 @@ requires one clock of the SPI clock.
 | write | half-word (16-bit) | `8 + 8`  | `8*SPI_ABYTES` | `16`      | `8 + 8 + 8*SPI_ABYTES + 16` |
 | write | byte (8-bit)       | `8 + 8`  | `8*SPI_ABYTES` | `8`       | `8 + 8 + 8*SPI_ABYTES +  8` |
 
-For example a word-wide write access to a SPI flash that used 24-bit addressing requires
+For example a word-wide write access to a SPI flash that uses 24-bit addressing requires
 `8 + 8 + 8*3 + 32 = 72` SPI clock cycles.
 
 :information_source: Any kind of write access requires to set the memory's _write enable latch_, which is done
@@ -226,8 +229,8 @@ wb_spi_bridge/sim$ gtkwave wb_spi_bridge.vcd
 The bridge is _FPGA-proven_. It has been tested by directly connecting it to the Wishbone interface port of the
 [NEORV32 RISC-V Processor](https://github.com/stnolting/neorv32) (no Wishbone interconnect) interfacing a 25LC512 SPI EEPROM.
 
-The NEORV32 software examples provides a ["bus explorer"](https://github.com/stnolting/neorv32/tree/master/sw/example/bus_explorer)
-program that allows to perform arbitrary Wishbone accesses via a UART terminal. The bridge can successfully handle all read and
+The NEORV32 software examples provides a ["bus explorer" program](https://github.com/stnolting/neorv32/tree/master/sw/example/bus_explorer)
+that allows to perform arbitrary Wishbone accesses via a UART terminal. The bridge can successfully handle all read and
 write operations. Furthermore, the NEORV32 can successfully execute _in place_ programs from the SPI module.
 
 
