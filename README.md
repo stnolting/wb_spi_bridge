@@ -1,6 +1,7 @@
 # :bridge_at_night: Transparent Wishbone-to-SPI Bridge
 
 [![License](https://img.shields.io/github/license/stnolting/wb_spi_bridge)](https://github.com/stnolting/wb_spi_bridge/blob/main/LICENSE)
+[![DOI](https://zenodo.org/badge/432909175.svg)](https://zenodo.org/badge/latestdoi/432909175)
 
 * [Overview](#Overview)
 * [Top Entity](#Top-Entity)
