@@ -161,6 +161,7 @@ begin
   assert not ((SPI_ABYTES < 1) or (SPI_ABYTES > 4)) report "wb_spi_bridge config ERROR: Number of address bytes <SPI_ABYTES> has to be 1, 2, 3 or 4." severity error;
   assert not (is_power_of_two_f(WB_ADDR_SIZE) = false) report "wb_spi_bridge config ERROR: Module address space <WB_ADDR_SIZE> has to be a power of two." severity error;
   assert not ((WB_ADDR_BASE and addr_mask_c) /= all_zero_c) report "wb_spi_bridge config ERROR: Module base address <WB_ADDR_BASE> has to be aligned to it's address space <WB_ADDR_SIZE>." severity error;
+  assert not (2**(SPI_ABYTES*8) < WB_ADDR_SIZE) report "wb_spi_bridge config ERROR: SPI address size <SPI_ABYTES> and module address space <WB_ADDR_SIZE> mismatch." severity error;
 
 
   -- Access Check ---------------------------------------------------------------------------
